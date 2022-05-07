@@ -1,13 +1,11 @@
-
-
-// Declare a function that takes two parameters, el and num to create elements a given number of times
+// create and appends el passed num of times
 function createEl(parent, el, num){
     for(i = 1; i <= num; i++){
         console.log(i);
         someDiv = document.createElement(el);
-        someDiv.textContent = 'Hello';
+        someDiv.textContent =  `Hello I'm div number ` + i;
+        someDiv.setAttribute('class', 'boxes');
         someDiv.setAttribute('id', 'box' + i);
-        console.log(someDiv.id);
         parent.appendChild(someDiv);
     }
 }
