@@ -11,24 +11,52 @@
 <body>
     
     <script>
-        const userPickedNum = 16;
-        const mainContainer = document.createElement('div');
-        mainContainer.setAttribute('id', 'mainContainer');
-        document.body.appendChild(mainContainer);
-        const mainHeight = document.getElementById('mainContainer').clientHeight;
-        const mainWidth = document.getElementById('mainContainer').clientWidth;
-        // const boxesWidth = mainWidth/userPickedNum - 20 + 'px';
+        const inputButton = document.createElement('button');
+        document.body.appendChild(inputButton);
 
-        createEl(mainContainer, 'div', userPickedNum ** 2);
+        const container = document.createElement('div');
+        container.setAttribute('id', 'mainContainer')
+        document.body.appendChild(container);
+        
+        let baseNum = 16;
+        const mainCont = document.querySelector('#mainContainer');
+        mainCont.style.gridTemplateColumns = `repeat(${baseNum}, 1fr`;
+        mainCont.style.gridTemplateRows = `repeat(${baseNum}, 1fr`;
+        
+
+        function createEls(el, num){
+            for(i = 1; i <= num; i++){
+                someDiv = document.createElement(el);
+                someDiv.setAttribute('class', 'boxes');
+                someDiv.setAttribute('id', 'box' + i);
+                mainCont.appendChild(someDiv);
+            }
+        }
+
+        createEls('div', baseNum ** 2);
+
+
+        const divBoxes = document.querySelectorAll('.boxes');
+        // divBoxes.forEach(element => {
+        //     mainCont.removeChild(element);
+        // });
+        divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
+        const button = document.querySelector('button');
+
+        button.addEventListener('click', (e) => {
+            let oldBoxes = document.querySelectorAll('.boxes');
+            oldBoxes.forEach(div => mainCont.removeChild(div));
+            numberCR = prompt();
+            mainCont.style.gridTemplateColumns = `repeat(${numberCR}, 1fr)`;
+            mainCont.style.gridTemplateRows = `repeat(${numberCR}, 1fr)`;
+            createEls('div', numberCR ** 2);    
+        });
+        
 
         function colorDiv(event) {
             this.classList.add('hovering');
         }
         
-        // divBoxes.forEach(div => div.style.width = boxesWidth);
-        // divBoxes.forEach(div => div.style.height = boxesWidth);
-        const divBoxes = document.querySelectorAll('.boxes');
-        divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
     </script>
 </body>
 </html>
