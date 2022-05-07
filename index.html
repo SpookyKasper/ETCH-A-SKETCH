@@ -11,16 +11,22 @@
 <body>
     
     <script>
-        // Declare a variable named content that stores the freshly created element 
-        const content = document.createElement('div');
-        content.setAttribute('id', 'content');
-        document.body.appendChild(content);
-        createEl(content, 'div', 16);
+        const userPickedNum = 16;
+        const mainContainer = document.createElement('div');
+        mainContainer.setAttribute('id', 'mainContainer');
+        document.body.appendChild(mainContainer);
+        const mainHeight = document.getElementById('mainContainer').clientHeight;
+        const mainWidth = document.getElementById('mainContainer').clientWidth;
+        // const boxesWidth = mainWidth/userPickedNum - 20 + 'px';
+
+        createEl(mainContainer, 'div', userPickedNum ** 2);
 
         function colorDiv(event) {
             this.classList.add('hovering');
         }
         
+        // divBoxes.forEach(div => div.style.width = boxesWidth);
+        // divBoxes.forEach(div => div.style.height = boxesWidth);
         const divBoxes = document.querySelectorAll('.boxes');
         divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
     </script>
