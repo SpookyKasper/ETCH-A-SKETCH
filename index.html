@@ -23,7 +23,6 @@
         mainCont.style.gridTemplateColumns = `repeat(${baseNum}, 1fr`;
         mainCont.style.gridTemplateRows = `repeat(${baseNum}, 1fr`;
         
-
         function createEls(el, num){
             for(i = 1; i <= num; i++){
                 someDiv = document.createElement(el);
@@ -33,14 +32,14 @@
             }
         }
 
+        function colorDiv(event) {
+            this.classList.add('hovered');
+        }
+
         createEls('div', baseNum ** 2);
-
-
         const divBoxes = document.querySelectorAll('.boxes');
-        // divBoxes.forEach(element => {
-        //     mainCont.removeChild(element);
-        // });
         divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
+
         const button = document.querySelector('button');
 
         button.addEventListener('click', (e) => {
@@ -49,13 +48,10 @@
             numberCR = prompt();
             mainCont.style.gridTemplateColumns = `repeat(${numberCR}, 1fr)`;
             mainCont.style.gridTemplateRows = `repeat(${numberCR}, 1fr)`;
-            createEls('div', numberCR ** 2);    
-        });
-        
-
-        function colorDiv(event) {
-            this.classList.add('hovering');
-        }
+            createEls('div', numberCR ** 2);
+            let newBoxes = document.querySelectorAll('.boxes');
+            newBoxes.forEach(box => box.addEventListener('mouseover', colorDiv));
+        });                                
         
     </script>
 </body>
