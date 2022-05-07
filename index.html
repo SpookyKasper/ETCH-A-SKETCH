@@ -11,10 +11,18 @@
 <body>
     
     <script>
-        let content = document.createElement('div');
+        // Declare a variable named content that stores the freshly created element 
+        const content = document.createElement('div');
         content.setAttribute('id', 'content');
-        let boxes = createEl(content, 'div', 16);
         document.body.appendChild(content);
+        createEl(content, 'div', 16);
+
+        function colorDiv(event) {
+            this.classList.add('hovering');
+        }
+        
+        const divBoxes = document.querySelectorAll('.boxes');
+        divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
     </script>
 </body>
 </html>
