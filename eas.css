@@ -13,6 +13,15 @@ body{
     background-color: aqua;
 }
 
+#buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.mainbuttons{
+    flex: 1;
+}
+
 .boxes{
     background-color: rgb(red, green, blue, 0.1);
     /* border: 1px dashed rgb(255, 255, 10, 0.5); */

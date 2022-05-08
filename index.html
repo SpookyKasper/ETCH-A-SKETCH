@@ -11,19 +11,35 @@
 <body>
     
     <script>
-        const inputButton = document.createElement('button');
-        document.body.appendChild(inputButton);
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.setAttribute('id', 'buttons');
+        document.body.appendChild(buttonsContainer);
 
-        const container = document.createElement('div');
-        container.setAttribute('id', 'mainContainer')
-        document.body.appendChild(container);
+        const paintButton = document.createElement('button');
+        paintButton.setAttribute('id', 'paintButton');
+        paintButton.textContent = 'Make a paintable grid';
+        buttonsContainer.appendChild(paintButton);
+
+        const randomPaintButton = document.createElement('button');
+        randomPaintButton.setAttribute('id', 'randomPaintButton');
+        randomPaintButton.textContent = 'Make a randomly paintable grid';
+        buttonsContainer.appendChild(randomPaintButton);
+
+        const digButton = document.createElement('button');
+        digButton.setAttribute('id', 'digButton');
+        digButton.textContent = 'Make a diggable grid';
+        buttonsContainer.appendChild(digButton);
+
+        const mainContainer = document.createElement('div');
+        mainContainer.setAttribute('id', 'mainContainer')
+        document.body.appendChild(mainContainer);
         
-        let baseNum = 16;
+        let baseGridSize = 16;
         const mainCont = document.querySelector('#mainContainer');
-        mainCont.style.gridTemplateColumns = `repeat(${baseNum}, 1fr`;
-        mainCont.style.gridTemplateRows = `repeat(${baseNum}, 1fr`;
+        mainCont.style.gridTemplateColumns = `repeat(${baseGridSize}, 1fr`;
+        mainCont.style.gridTemplateRows = `repeat(${baseGridSize}, 1fr`;
         
-        function createEls(el, num){
+        function createBoxes(el, num){
             for(i = 1; i <= num; i++){
                 someDiv = document.createElement(el);
                 someDiv.setAttribute('class', 'boxes');
@@ -39,53 +55,62 @@
         function randColorDiv(event) {
             let red = Math.floor(Math.random() * 255)
             let green = Math.floor(Math.random() * 255)
-            let blue = Math.floor(Math.random() * 100)
+            let blue = Math.floor(Math.random() * 255)
             this.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;   
         }
         
-        function lightening(event){
+        function lighteningDiv(event){
             let thisStyle = getComputedStyle(this);
             let thisBackgroundColor = thisStyle.backgroundColor;
             let thisAlpha = parseFloat(thisBackgroundColor.split(',')[3]);
             thisAlpha += 0.1;
             this.style.backgroundColor = `rgb(255, 255, 255, ${thisAlpha})`;   
-            console.log(thisAlpha);
         }
         
-        createEls('div', baseNum ** 2);
+        createBoxes('div', baseGridSize ** 2);
         const divBoxes = document.querySelectorAll('.boxes');
-        // divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
-        // divBoxes.forEach(div => div.addEventListener('mouseover', randColorDiv));
-        divBoxes.forEach(div => div.addEventListener('mouseover', lightening));
+        divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
         
-        const button = document.querySelector('button');
-        button.textContent = 'Choose a grid!'
-        button.style.padding = '20px 50px'
+        // Base Above, Post button click Underneath
 
-        button.addEventListener('click', (e) => {
-            let keepGoing = true;
-            while(keepGoing){
-                numberCR = prompt('Choose a number between 1 and 100 :)');
-                if (numberCR === null){
-                    numberCR = baseNum;
-                    keepGoing = false;
-                    return;
-                } else if (isNaN(numberCR) || numberCR > 100 || numberCR < 1){
-                    alert('please input a number between 1 and 100');
-                    continue;
-                } else { 
-                    keepGoing = false;                                
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.style.padding = '20px 50px')
+        buttons.forEach(button => button.setAttribute('class', 'mainbuttons'));
+
+        buttons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                let keepGoing = true;
+                while(keepGoing){
+                    numberCR = prompt('Choose a number between 1 and 100 for the size of the grid :)');
+                    if (numberCR === null){
+                        numberCR = baseGridSize;
+                        keepGoing = false;
+                        return;
+                    } else if (isNaN(numberCR) || numberCR > 100 || numberCR < 1){
+                        alert('please input a number between 1 and 100');
+                        continue;
+                    } else { 
+                        keepGoing = false;                                
+                    }
                 }
-            }
-            let oldBoxes = document.querySelectorAll('.boxes');
-            oldBoxes.forEach(div => mainCont.removeChild(div));
-            mainCont.style.gridTemplateColumns = `repeat(${numberCR}, 1fr)`;
-            mainCont.style.gridTemplateRows = `repeat(${numberCR}, 1fr)`;
-            createEls('div', numberCR ** 2);
-            let newBoxes = document.querySelectorAll('.boxes');
-            newBoxes.forEach(box => box.addEventListener('mouseover', lightening));
+                let oldBoxes = document.querySelectorAll('.boxes');
+                oldBoxes.forEach(div => mainCont.removeChild(div));
+                mainCont.style.gridTemplateColumns = `repeat(${numberCR}, 1fr)`;
+                mainCont.style.gridTemplateRows = `repeat(${numberCR}, 1fr)`;
+                createBoxes('div', numberCR ** 2);
+                let newBoxes = document.querySelectorAll('.boxes');
+                console.log(button.id);
+                if(button.id === 'digButton'){
+                    newBoxes.forEach(box => box.addEventListener('mouseover', lighteningDiv));
+                } else if (button.id === 'randomPaintButton'){
+                    newBoxes.forEach(box => box.addEventListener('mouseover', randColorDiv));
+                } else if (button.id === 'paintButton'){
+                    newBoxes.forEach(box => box.addEventListener('mouseover', colorDiv));
+
+                }
+            });  
         });                                
         
     </script>
-</body>
 </html>
+</body>
