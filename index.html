@@ -32,20 +32,40 @@
             }
         }
 
-        function colorDiv(event) {
+        function colorDiv(event){
             this.classList.add('hovered');
         }
 
+        function randColorDiv(event) {
+            let red = Math.floor(Math.random() * 255)
+            let green = Math.floor(Math.random() * 255)
+            let blue = Math.floor(Math.random() * 100)
+            this.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;   
+        }
+        
+        function lightening(event){
+            let thisStyle = getComputedStyle(this);
+            let thisBackgroundColor = thisStyle.backgroundColor;
+            let thisAlpha = parseFloat(thisBackgroundColor.split(',')[3]);
+            thisAlpha += 0.1;
+            this.style.backgroundColor = `rgb(255, 255, 255, ${thisAlpha})`;   
+            console.log(thisAlpha);
+        }
+        
         createEls('div', baseNum ** 2);
         const divBoxes = document.querySelectorAll('.boxes');
-        divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
-
+        // divBoxes.forEach(div => div.addEventListener('mouseover', colorDiv));
+        // divBoxes.forEach(div => div.addEventListener('mouseover', randColorDiv));
+        divBoxes.forEach(div => div.addEventListener('mouseover', lightening));
+        
         const button = document.querySelector('button');
+        button.textContent = 'Choose a grid!'
+        button.style.padding = '20px 50px'
 
         button.addEventListener('click', (e) => {
             let keepGoing = true;
             while(keepGoing){
-                numberCR = prompt();
+                numberCR = prompt('Choose a number between 1 and 100 :)');
                 if (numberCR === null){
                     numberCR = baseNum;
                     keepGoing = false;
@@ -59,12 +79,11 @@
             }
             let oldBoxes = document.querySelectorAll('.boxes');
             oldBoxes.forEach(div => mainCont.removeChild(div));
-            
             mainCont.style.gridTemplateColumns = `repeat(${numberCR}, 1fr)`;
             mainCont.style.gridTemplateRows = `repeat(${numberCR}, 1fr)`;
             createEls('div', numberCR ** 2);
             let newBoxes = document.querySelectorAll('.boxes');
-            newBoxes.forEach(box => box.addEventListener('mouseover', colorDiv));
+            newBoxes.forEach(box => box.addEventListener('mouseover', lightening));
         });                                
         
     </script>
