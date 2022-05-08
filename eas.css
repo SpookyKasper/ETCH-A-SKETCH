@@ -8,11 +8,11 @@ body{
     border: solid red;
     height: 100vh;
     width: 100vh;
+    background-color: aqua;
 }
 
 .boxes{
     background-color: aqua;
-    border: solid red;
 }
 
 .hovered{

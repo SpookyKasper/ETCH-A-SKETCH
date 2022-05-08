@@ -43,9 +43,23 @@
         const button = document.querySelector('button');
 
         button.addEventListener('click', (e) => {
+            let keepGoing = true;
+            while(keepGoing){
+                numberCR = prompt();
+                if (numberCR === null){
+                    numberCR = baseNum;
+                    keepGoing = false;
+                    return;
+                } else if (isNaN(numberCR) || numberCR > 100 || numberCR < 1){
+                    alert('please input a number between 1 and 100');
+                    continue;
+                } else { 
+                    keepGoing = false;                                
+                }
+            }
             let oldBoxes = document.querySelectorAll('.boxes');
             oldBoxes.forEach(div => mainCont.removeChild(div));
-            numberCR = prompt();
+            
             mainCont.style.gridTemplateColumns = `repeat(${numberCR}, 1fr)`;
             mainCont.style.gridTemplateRows = `repeat(${numberCR}, 1fr)`;
             createEls('div', numberCR ** 2);
